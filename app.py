@@ -38,6 +38,20 @@ def display_weather_data(data):
             
     except KeyError as e:
         st.write("Error: Invalid location or API response. Please check the location and try again.")
-
+def set_background(weather_description):
+    # Mapping weather conditions to appropriate image keywords
+    weather_images = {
+        "clear sky": "sun",
+        "few clouds": "clouds",
+        "scattered clouds": "clouds",
+        "broken clouds": "clouds",
+        "overcast clouds": "clouds",
+        "light rain": "rain",
+        "moderate rain": "rain",
+        "heavy intensity rain": "rain",
+        "light snow": "snow",
+        "moderate snow": "snow",
+        "heavy snow": "snow"
+    }
 weather_data = fetch_weather_data(user_input)
 display_weather_data(weather_data)
