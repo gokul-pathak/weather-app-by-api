@@ -1,6 +1,9 @@
 import streamlit as st
 import requests
+import json
+
 st.title("Weather App")
+
 # API key
 api_key = "Genereate your API" #confidential
 
@@ -16,6 +19,7 @@ def fetch_weather_data(location):
     response = requests.get(base_url)
     data = response.json()
     return data
+
 # Function to display weather data
 def display_weather_data(data):
     try:
@@ -35,9 +39,13 @@ def display_weather_data(data):
         if 'snow' in data:
             snow_amount = data['snow']['1h']
             st.write(f"Snow Amount: {snow_amount} cm (last hour)")
-            
+        
+        # Set background image based on weather condition
+        set_background(weather_description)
+
     except KeyError as e:
         st.write("Error: Invalid location or API response. Please check the location and try again.")
+
 def set_background(weather_description):
     # Mapping weather conditions to appropriate image keywords
     weather_images = {
@@ -53,5 +61,14 @@ def set_background(weather_description):
         "moderate snow": "snow",
         "heavy snow": "snow"
     }
+
+    # Selecting a random image from Unsplash based on weather condition
+    image_keyword = weather_images.get(weather_description.lower(), "weather")
+    image_url = f"https://source.unsplash.com/featured/?{image_keyword}"
+    st.markdown(f'<style>.stApp {{background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url({image_url}); background-size: cover;}}</style>', unsafe_allow_html=True)
+
+    # Add watermark
+    st.markdown(f'<style>.stApp:after {{content: "Developed by Gokul Pathak"; position: fixed; bottom: 20px; right: 20px; color: white; font-size: 16px; opacity: 0.7;}}</style>', unsafe_allow_html=True)
+
 weather_data = fetch_weather_data(user_input)
 display_weather_data(weather_data)
