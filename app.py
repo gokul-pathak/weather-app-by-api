@@ -5,7 +5,7 @@ import json
 st.title("Weather App")
 
 # API key
-api_key = "Your API key" #confidential
+api_key = "886705b4c1182eb1c69f28eb8c520e20" 
 
 # Default location
 default_location = "Baglung, Nepal"
